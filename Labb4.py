@@ -1,18 +1,18 @@
-
-#---------------------------------------------------------
+'''
+Program för ett enkelt telefonboksregister.
+@author: Marcus Paulsson
+'''
 
 #Deklarerar klassen
 class Contact:
-    def __init__(self, name, number): # Metoden som delar in indatan 
+    def __init__(self, name, number): # konstruktor för att skapa kontaktobjekten 
         self.name = name
         self.number=[]
-       
-        
 #---------------------------------------------------------
         
 # Funktion som kör programmet och tillkallar alla andra metoder
 def lab4main():
-    storageList=[] # skapar listan där all indata ska lagras
+    storageList=[] # skapar listan där kontaktobjekten ska lagras
     phonebookMenu() # skriver ut menyalternativen
     while True:
         insert=input("> ") 
@@ -43,20 +43,13 @@ def lab4main():
                 load(temp_choiceList, storageList)
 
             elif temp_choiceList[0] == 'quit':
-                avsluta()
+                print("Exited!")
                 break
-            elif temp_choiceList[0] == 'list':
-                lista(storageList)
+            
             else:
                 print("Insert a command!") # Felmeddelande för ord som ej finns
         except  IndexError:
             print("Insert a command!")# Felmeddelande när inget skrivs in i listan
-
-
-            #------------------------------------#
-            # FUNKTIONER SOM ANROPAS I PROGRAMMET#
-            #------------------------------------#
-
 #----------------------------------------------------------------
             
 #Funktion som skriver ut menyn
@@ -97,49 +90,41 @@ def add(temp_choiceList, storageList):
                     if storageList[i].number[j] == temp_choiceList[2]:
                         print("Error!, number already exists.")
                         return
-            
-        for i in range(len(storageList)): # när vi kollat att inget fel finns loopar vi igenom igen för att lägga in på rätt position
-            if temp_choiceList[1] == storageList[i].name:
-                storageList[i].number.append(temp_choiceList[2])
+                storageList[i].number.append(temp_choiceList[2]) # lägger in numret om det inte redan fanns.
                 return
         print("Error!, the name does not exists")
     else:
         print("Error!, insert with the correct syntax (*add name number*)")
-
 #-----------------------------------------------------------------
     
 #Funktion som söker efter numret för ett namn
 def lookup(temp_choiceList, storageList):
     if len(temp_choiceList) == 2: # Kollar input-syntaxen
         for i in range(len(storageList)): # Loopar igenom hela lagringslistan och kollar om den finns som namn eller alias
-            if temp_choiceList[1] in storageList[i].name:
+            if temp_choiceList[1] == storageList[i].name: 
                 print("Numbers for "+temp_choiceList[1]+":")
                 if len(storageList[i].number)==0:
                     print("No numbers stored")
                     return
-                
-                for j in range(len(storageList[i].number)):
+                for j in range(len(storageList[i].number)): # loopar igenom nummerlistan för kontakten och printar ut alla nummer som finns
                     print(storageList[i].number[j])
                 return
         print("Error!, the name does not exist")
         return
     else:
         print("Error!, insert with the correct syntax (*lookup name*)")
-
 #-----------------------------------------------------------------
-        
         
 #Funktion för att byta nummer för en kontakt
 def delete(temp_choiceList, storageList):
     if len(temp_choiceList) == 3: # Kollar input-syntaxen för (*delete name + number*)
-
         for i in range(len(storageList)):
-            if temp_choiceList[1] in storageList[i].name:
+            if temp_choiceList[1] == storageList[i].name:
                 for j in range(len( storageList[i].number)):
                     if temp_choiceList[2] == storageList[i].number[j]:  
                         del(storageList[i].number[j])
                         return
-                print("number does not exists for this contact, cannot be deleted")
+                print("Error!, number does not exists for this contact")
                 return
         print("Name does not exists")
         return
@@ -148,10 +133,9 @@ def delete(temp_choiceList, storageList):
             if temp_choiceList[1] == storageList[i].name:
                 del(storageList[i])
                 return
-        print("Name does not exists.")
+        print("Error!, name does not exists.")
     else:
         print("Error!, insert with the correct syntax (*delete name number*) or (*delete name*)")
-
 #-------------------------------------------------------------------
         
 #Funktion som sparar en textfil med alla inlagda kontakter
@@ -164,10 +148,8 @@ def save(temp_choiceList,storageList):
                         file.write(storageList[i].number[j]+";")
                 file.write("\n")
             file.close()
-            return
     else:
         print("Error!, insert with the correct syntax (*save filename*)")
-
 #-------------------------------------------------------------------
         
 #Funktion som laddar in kontakter från en textfil
@@ -179,28 +161,14 @@ def load(temp_choiceList, storageList):
                 storageList.clear() #Kastar bort det som evetuellt redan finns
                 for i in range(len(allLines)):
                     loadList = allLines[i].split(";") # Delar upp datan på varje rad i en lista
-                    storageList.append(Contact(loadList[0],[]))
+                    storageList.append(Contact(loadList[0],[])) # Skapar ett kontakt-objekt 
                     temp_numList= loadList[1:-1]
-                    for j in range(len(temp_numList)):
+                    for j in range(len(temp_numList)): # loopar igenom de lagrade numrena och lägger in dem i objektet.
                         storageList[i].number.append(temp_numList[j])
-    
         except FileNotFoundError:
-             print("Error!, file does not exist")
-        
+             print("Error!, file does not exist")  
     else:
         print("Error!, insert with the correct syntax (*load filename*)")
-      
 #---------------------------------------------------------------------
 
-#Funktion för avslut för programmet
-def avsluta():
-    print("Exited!")
-
-#kallar för att starta programmet direkt
-lab4main()        
-
-
-
-
-
-
+lab4main() 
