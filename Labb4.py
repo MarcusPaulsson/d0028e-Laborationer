@@ -30,9 +30,6 @@ def lab4main():
             elif temp_choiceList[0] == 'lookup':
                 lookup(temp_choiceList, storageList)
 
-            elif temp_choiceList[0] == 'alias':
-                alias(temp_choiceList, storageList)
-
             elif temp_choiceList[0] == 'delete':
                 delete(temp_choiceList, storageList)
 
