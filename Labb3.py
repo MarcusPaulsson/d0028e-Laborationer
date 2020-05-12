@@ -2,7 +2,7 @@
 Program för olika lagringsmetoder
 @author: Marcus Paulsson
 '''
-
+#teständring
 ####### FUNKTIONER ALLA LÖSNINGAR ANVÄNDER #######   
     
 #Funktion som skriver ut när man anger felaktigt tecken för menyn.    
@@ -15,8 +15,7 @@ def menu_choice(storageType):
     i=input("Choose alternative: ")
     return i
 
-#---------------------------------------------
-
+#--------------------------------------------
 ######## LÖSNING 1: LISTOR ########
     
 def main_list():
