@@ -2,7 +2,7 @@
 Program för olika lagringsmetoder
 @author: Marcus Paulsson
 '''
-#teständring
+
 ####### FUNKTIONER ALLA LÖSNINGAR ANVÄNDER #######   
     
 #Funktion som skriver ut när man anger felaktigt tecken för menyn.    
